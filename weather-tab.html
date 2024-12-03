@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>Weather App</h1>
+    <style>
+        h1{
+            text-align: center;
+            font-family: Arial;
+        }
+        div{
+            text-align: center;
+        }
+        input{
+            text-align: center;
+            margin: 20px;
+        }
+        #table{
+            text-align: center;
+            /* border: solid red 1px; */
+            position: relative;
+            left: 550px;
+            display: inline-block;
+
+        }
+        th{
+            margin: 20px;
+
+            border: solid black 1px;
+            font-family: Arial;
+            /* padding-left: 20px; */
+            padding: 10px;
+        }
+        td{
+            margin: 30px;
+            border: solid black 1px;
+            padding: 10px;
+        }
+        button{
+            height: 20px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input id="naam" type="text" placeholder="City name"><button id="call_main">Search</button>
+    </div>
+    <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Feels Like</th>
+                    <th>Humidity</th>
+                    <th>Pressure</th>
+                    <th>Temperature</th>
+                    <th>Temp Min</th>
+                    <th>Temp Max</th>
+                    <th>Weather Type</th>
+                    <th>Wind Speed</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let call_btn = document.getElementById('call_main')
+        call_btn.addEventListener('click', function(){
+        let api_key = "c8489e948a659620e6dda83869c3e4f6"
+        let city_name = document.getElementById('naam').value
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${api_key}&units=metric`)
+        .then(response => {
+            return response.json()}
+        )
+            .then(jason => {
+                console.log(jason)
+                let gen = document.getElementById('table')
+                let tbody = gen.getElementsByTagName('tbody')[0]
+                let tr = document.createElement('tr')
+                let td1 = document.createElement('td')
+                let td2 = document.createElement('td')
+                let td3 = document.createElement('td')
+                let td4 = document.createElement('td')
+                let td5 = document.createElement('td')
+                let td6 = document.createElement('td')
+                let td7 = document.createElement('td')
+                let td8 = document.createElement('td')
+                let td9 = document.createElement('td')
+                td1.innerHTML = jason.name;
+                td2.innerHTML = jason.main.feels_like
+                td3.innerHTML = jason.main.humidity;
+                td4.innerHTML = jason.main.pressure;
+                td5.innerHTML = jason.main.temp;
+                td6.innerHTML = jason.main.temp_min;
+                td7.innerHTML = jason.main.temp_max;
+                td8.innerHTML = jason.weather[0].main;
+                td9.innerHTML = jason.wind.speed;
+
+
+                tr.appendChild(td1)
+                tr.appendChild(td2)
+                tr.appendChild(td3)
+                tr.appendChild(td4)
+                tr.appendChild(td5)
+                tr.appendChild(td6)
+                tr.appendChild(td7)
+                tr.appendChild(td8)
+                tr.appendChild(td9)
+
+                tbody.appendChild(tr)
+            })
+        })
+        
+    </script>
+</body>
+</html>
